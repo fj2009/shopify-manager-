@@ -1,0 +1,26 @@
+services:
+  backend:
+    environment:
+      ENVIRONMENT: production
+    restart: unless-stopped
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    volumes: []
+
+  worker:
+    environment:
+      ENVIRONMENT: production
+    restart: unless-stopped
+    volumes: []
+
+  frontend:
+    restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+    ports:
+      - "3000:3000"
+
+  postgres:
+    restart: unless-stopped
+
+  redis:
+    restart: unless-stopped
